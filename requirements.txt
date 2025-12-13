@@ -1,0 +1,26 @@
+ipykernel
+pandas
+numpy
+matplotlib
+plotly
+seaborn
+scikit-learn
+xgboost
+dotenv
+databricks
+from_root
+dill
+certifi
+PyYAML
+databricks-sql-connector
+boto3
+mypy-boto3-s3
+botocore
+fastapi
+python-multipart
+uvicorn
+jinja2
+imblearn
+pyarrow
+-e .
+

@@ -1,0 +1,91 @@
+columns:
+  - Date: object              
+  - Hour: int                # Hour is typically treated as a categorical or cyclical feature
+  - Seasons: category
+  - Holiday: category
+  - Functioning Day: category
+  - Rented Bike Count: int
+  - Temperature(ï¿½C): float
+  - Humidity(%): int
+  - Wind speed (m/s): float
+  - Visibility (10m): int
+  - Dew point temperature(ï¿½C): float
+  - Solar Radiation (MJ/m2): float
+  - Rainfall(mm): float
+  - Snowfall (cm): float
+
+
+
+
+numerical_columns:
+  - Hour
+  - Rented Bike Count
+  - Temperature(�C)
+  - Humidity(%)
+  - Wind speed (m/s)
+  - Visibility (10m)
+  - Dew point temperature(�C)
+  - Solar Radiation (MJ/m2)
+  - Rainfall(mm)
+  - Snowfall (cm)
+
+
+categorical_columns:
+  - Seasons
+  - Holiday
+  - Functioning Day
+
+
+object_columns:
+  - Date
+drop_columns:
+  - Date
+ 
+
+
+# # for data transformation
+num_features:
+  - Functioning Day_No
+  - Holiday_Holiday
+  - Solar Radiation (MJ/m2)
+  - Seasons_Summer
+  - Humidity(%)
+  - Wind speed (m/s)
+  - Hour
+  - Dew point temperature(�C)
+  - Rainfall(mm)
+  - Functioning Day_Yes
+  - Seasons_Spring
+  - day
+  - Seasons_Autumn
+  - Temperature(�C)
+  - month
+  - Holiday_No Holiday
+  - Snowfall (cm)
+  - Seasons_Winter
+  - Visibility (10m)
+  - dayofweek
+
+
+# mm_columns:
+#   - Annual_Premium
+
+
+
+
+1columns:
+  - Date
+  - Hour
+  - Seasons
+  - Holiday
+  - Functioning Day
+  - Rented Bike Count
+  - Temperature(�C)
+  - Humidity(%)
+  - Wind speed (m/s)
+  - Visibility (10m)
+  - Dew point temperature(�C)
+  - Solar Radiation (MJ/m2)
+  - Rainfall(mm)
+  - Snowfall (cm)
+
