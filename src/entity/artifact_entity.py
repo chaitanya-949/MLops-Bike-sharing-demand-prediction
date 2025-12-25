@@ -19,7 +19,7 @@ class DataValidationArtifact:
    
 @dataclass
 class DataTransformationArtifact:
-    transformed_object_file_path:str
+    # transformed_object_file_path:str
     transformed_train_file_path:str
     transformed_test_file_path:str
    
@@ -46,4 +46,6 @@ class ModelEvaluationArtifact:
     changed_accuracy:float
     # s3_model_path:str
     trained_model_path:str
+
+
 

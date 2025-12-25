@@ -3,7 +3,7 @@ from typing import Tuple
 
 
 import numpy as np
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestRegressor
 #from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 import xgboost as xgb
 from sklearn.metrics import mean_squared_error, r2_score
@@ -44,14 +44,25 @@ class ModelTrainer:
 
 
             # Initialize RandomForestClassifier with specified parameters
-            model = xgb.XGBRFRegressor(
+            model = RandomForestRegressor(random_state=42
+                # objective = self.model_trainer_config.objective,
                 # n_estimators = self.model_trainer_config._n_estimators,
-                # min_samples_split = self.model_trainer_config._min_samples_split,
-                # min_samples_leaf = self.model_trainer_config._min_samples_leaf,
-                # max_depth = self.model_trainer_config._max_depth,
-                # criterion = self.model_trainer_config._criterion,
-                # random_state = self.model_trainer_config._random_state
+                # gamma = self.model_trainer_config.gamma,
+                # learning_rate = self.model_trainer_config.learning_rate,
+                # max_depth = self.model_trainer_config._max_depth,  
+                # subsample = self.model_trainer_config.subsample,
+                # colsample_bytree = self.model_trainer_config.colsample_bytree,    
+                # reg_alpha = self.model_trainer_config.reg_alpha,
+                # reg_lambda = self.model_trainer_config.reg_lambda,
+                # n_jobs = self.model_trainer_config.n_jobs,
+                # random_state = self.model_trainer_config.random_state
             )
+            #     min_samples_split = self.model_trainer_config._min_samples_split,
+            #     min_samples_leaf = self.model_trainer_config._min_samples_leaf,
+            #     max_depth = self.model_trainer_config._max_depth,
+            #     criterion = self.model_trainer_config._criterion,
+            #     random_state = self.model_trainer_config._random_state
+            # )
 
 
             # Fit the model
@@ -98,8 +109,8 @@ class ModelTrainer:
             logging.info("Model object and artifact loaded.")
            
             # Load preprocessing object
-            preprocessing_obj = load_object(file_path=self.data_transformation_artifact.transformed_object_file_path)
-            logging.info("Preprocessing obj loaded.")
+            # preprocessing_obj = load_object(file_path=self.data_transformation_artifact.transformed_object_file_path)
+            # logging.info("Preprocessing obj loaded.")
 
 
             # Check if the model's accuracy meets the expected threshold
@@ -110,7 +121,8 @@ class ModelTrainer:
 
             # Save the final model object that includes both preprocessing and the trained model
             logging.info("Saving new model as performace is better than previous one.")
-            my_model = MyModel(preprocessing_object=preprocessing_obj, trained_model_object=trained_model)
+            my_model = MyModel( trained_model_object=trained_model)
+           # my_model = MyModel(preprocessing_object=preprocessing_obj, trained_model_object=trained_model)
             save_object(self.model_trainer_config.trained_model_file_path, my_model)
             logging.info("Saved final model object that includes both preprocessing and the trained model")
 

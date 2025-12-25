@@ -52,21 +52,7 @@ class Source_Connectors:
                 with connection.cursor() as cursor:
                     cursor.execute(query)
                     arrow_table = cursor.fetchall_arrow()
-
-                    # robust conversion: try common APIs across connector/pyarrow versions
-                    if hasattr(arrow_table, "to_pandas"):
-                        df = arrow_table.to_pandas()
-                    elif hasattr(arrow_table, "to_arrow"):
-                        # some wrappers expose a to_arrow() returning pyarrow.Table
-                        df = arrow_table.to_arrow().to_pandas()
-                    elif hasattr(arrow_table, "to_pydict"):
-                        df = pd.DataFrame(arrow_table.to_pydict())
-                    else:
-                        # For debugging: include actual type and available attributes
-                        raise TypeError(
-                            f"Unexpected result type from fetchall_arrow(): {type(arrow_table)}. "
-                            f"Available attributes: {', '.join(sorted(dir(arrow_table)))}"
-                        )
+                    df = arrow_table.to_pandas()
                 return df
         except Exception as e:
             # re-raise so upstream code can handle/log appropriately

@@ -46,7 +46,7 @@ class dataTransformation:
         df['Date'] = pd.to_datetime(df['Date'])
         df['month'] = pd.to_datetime(df['Date']).dt.month
         df['day'] = pd.to_datetime(df['Date']).dt.day
-        df['dayofweek']= pd.to_datetime(df['Date']).dt.dayofweek
+        #df['dayofweek']= pd.to_datetime(df['Date']).dt.dayofweek
         return df
        
        
@@ -58,9 +58,9 @@ class dataTransformation:
        
         # Handle both single column (string) and multiple columns (list)
         if isinstance(drop_cols, list):
-            df = df.drop(columns=[col for col in drop_cols if col in df.columns], errors='ignore')
+            df = df.drop(columns=[col for col in drop_cols if col in df.columns],axis=1, errors='ignore')
         else:
-            df = df.drop(columns=[drop_cols], errors='ignore')
+            df = df.drop(columns=[drop_cols], errors='ignore',axis=1)
        
         return df
        
@@ -69,7 +69,7 @@ class dataTransformation:
     def _create_dummy_columns(self, df):
         """Create dummy variables for categorical features."""
         logging.info("Creating dummy variables for categorical features")
-        df = pd.get_dummies(df).astype(int)
+        df = pd.get_dummies(data=df,drop_first=True).astype(int)
         return df
            
            
@@ -179,36 +179,36 @@ class dataTransformation:
             input_feature_train_df = self.handle_date(input_feature_train_df)
             input_feature_train_df = self._drop_datecolumn(input_feature_train_df)
             input_feature_train_df = self._create_dummy_columns(input_feature_train_df)
-            input_feature_train_df = self.square_root_transformation(input_feature_train_df)
+           # input_feature_train_df = self.square_root_transformation(input_feature_train_df)
            
            
             input_feature_test_df = self.handle_date(input_feature_test_df)
             input_feature_test_df = self._drop_datecolumn(input_feature_test_df)
             input_feature_test_df = self._create_dummy_columns(input_feature_test_df)
-            input_feature_test_df = self.square_root_transformation(input_feature_test_df)
+           # input_feature_test_df = self.square_root_transformation(input_feature_test_df)
             logging.info("Custom transformations applied to train and test data")
 
 
-            # Get transformer and fit on train data
-            preprocessor = self.get_data_transformer_object()
-            input_feature_train_arr = preprocessor.fit_transform(input_feature_train_df)
-            input_feature_test_arr = preprocessor.transform(input_feature_test_df)
-            logging.info("Preprocessing pipeline applied")
+            # # # Get transformer and fit on train data
+            # preprocessor = self.get_data_transformer_object()
+            # input_feature_train_arr = preprocessor.fit_transform(input_feature_train_df)
+            # input_feature_test_arr = preprocessor.transform(input_feature_test_df)
+            # logging.info("Preprocessing pipeline applied")
 
 
             # Save transformed arrays
-            save_numpy_array_data(self.data_transformation_config.transformed_train_file_path, input_feature_train_arr)
-            save_numpy_array_data(self.data_transformation_config.transformed_test_file_path, input_feature_test_arr)
+            save_numpy_array_data(self.data_transformation_config.transformed_train_file_path, input_feature_train_df)
+            save_numpy_array_data(self.data_transformation_config.transformed_test_file_path, input_feature_test_df)
            
-            # Save preprocessor object
-            save_object(self.data_transformation_config.transformed_object_file_path, preprocessor)
+            # #Save preprocessor object
+            # save_object(self.data_transformation_config.transformed_object_file_path, preprocessor)
             logging.info("Transformed data and preprocessor saved")
 
 
             data_transformation_artifact = DataTransformationArtifact(
                 transformed_train_file_path=self.data_transformation_config.transformed_train_file_path,
                 transformed_test_file_path=self.data_transformation_config.transformed_test_file_path,
-                transformed_object_file_path=self.data_transformation_config.transformed_object_file_path
+                # transformed_object_file_path=self.data_transformation_config.transformed_object_file_path
             )
            
             logging.info(f"Data Transformation Artifact: {data_transformation_artifact}")

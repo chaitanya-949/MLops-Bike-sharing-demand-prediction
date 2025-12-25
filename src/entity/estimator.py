@@ -22,12 +22,13 @@ from src.logger import logging
 
 
 class MyModel:
-    def __init__(self, preprocessing_object: Pipeline, trained_model_object: object):
+    def __init__(self, trained_model_object: object):
+    #def __init__(self, preprocessing_object: Pipeline, trained_model_object: object):
         """
         :param preprocessing_object: Input Object of preprocesser
         :param trained_model_object: Input Object of trained model
         """
-        self.preprocessing_object = preprocessing_object
+       # self.preprocessing_object = preprocessing_object
         self.trained_model_object = trained_model_object
 
 
@@ -41,7 +42,8 @@ class MyModel:
 
 
             # Step 1: Apply scaling transformations using the pre-trained preprocessing object
-            transformed_feature = self.preprocessing_object.transform(dataframe)
+            #transformed_feature = self.preprocessing_object.transform(dataframe)
+            transformed_feature = dataframe
 
 
             # Step 2: Perform prediction using the trained model
@@ -65,4 +67,6 @@ class MyModel:
 
     def __str__(self):
         return f"{type(self.trained_model_object).__name__}()"
+
+
 

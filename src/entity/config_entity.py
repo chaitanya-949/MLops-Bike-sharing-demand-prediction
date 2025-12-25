@@ -43,9 +43,9 @@ class DataTransformationConfig:
                                                     TRAIN_FILE_NAME.replace("csv", "npy"))
     transformed_test_file_path: str = os.path.join(data_transformation_dir, DATA_TRANSFORMATION_TRANSFORMED_DATA_DIR,
                                                    TEST_FILE_NAME.replace("csv", "npy"))
-    transformed_object_file_path: str = os.path.join(data_transformation_dir,
-                                                     DATA_TRANSFORMATION_TRANSFORMED_OBJECT_DIR,
-                                                     PREPROCESSING_OBJECT_FILE_NAME)
+    # transformed_object_file_path: str = os.path.join(data_transformation_dir,
+    #                                                  DATA_TRANSFORMATION_TRANSFORMED_OBJECT_DIR,
+    #                                                  PREPROCESSING_OBJECT_FILE_NAME)
    
    
    
@@ -57,12 +57,23 @@ class ModelTrainerConfig:
     trained_model_file_path: str = os.path.join(model_trainer_dir, MODEL_TRAINER_TRAINED_MODEL_DIR, MODEL_FILE_NAME)
     expected_accuracy: float = MODEL_TRAINER_EXPECTED_SCORE
     model_config_file_path: str = MODEL_TRAINER_MODEL_CONFIG_FILE_PATH
+    objective = objective
     _n_estimators = MODEL_TRAINER_N_ESTIMATORS
-    _min_samples_split = MODEL_TRAINER_MIN_SAMPLES_SPLIT
-    _min_samples_leaf = MODEL_TRAINER_MIN_SAMPLES_LEAF
+    gamma = gamma
+    learning_rate = learning_rate  
+    subsample = subsample
+    colsample_bytree = colsample_bytree
+    reg_alpha = reg_alpha
+    reg_lambda = reg_lambda
+    n_jobs = n_jobs
+    random_state = random_state
+             
+    MODEL_TRAINER_MIN_CHILD_WEIGHT = MODEL_TRAINER_MIN_CHILD_WEIGHT
+    # _min_samples_split = MODEL_TRAINER_MIN_SAMPLES_SPLIT
+    # _min_samples_leaf = MODEL_TRAINER_MIN_SAMPLES_LEAF
     _max_depth = MIN_SAMPLES_SPLIT_MAX_DEPTH
-    _criterion = MIN_SAMPLES_SPLIT_CRITERION
-    _random_state = MIN_SAMPLES_SPLIT_RANDOM_STATE
+    # _criterion = MIN_SAMPLES_SPLIT_CRITERION
+    # _random_state = MIN_SAMPLES_SPLIT_RANDOM_STATE
 
 
 
@@ -76,3 +87,6 @@ class ModelEvaluationConfig:
     changed_threshold_score: float = MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE
     # bucket_name: str = MODEL_BUCKET_NAME
     # s3_model_key_path: str = MODEL_FILE_NAME
+
+
+
