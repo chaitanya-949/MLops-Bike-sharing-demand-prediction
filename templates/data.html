@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bike Rental Prediction</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Bike Rental Prediction</h1>
+
+
+        <form method="post" action="/">
+            <label for="Hour">Hour (0-23):</label>
+            <input type="number" id="Hour" name="Hour" min="0" max="23" required>
+
+
+            <label for="Temperature">Temperature (°C):</label>
+            <input type="number" step="0.1" id="Temperature" name="Temperature" required>
+
+
+            <label for="Humidity">Humidity (%):</label>
+            <input type="number" id="Humidity" name="Humidity" required>
+
+
+            <label for="Wind_speed">Wind Speed (m/s):</label>
+            <input type="number" step="0.1" id="Wind_speed" name="Wind_speed" required>
+
+
+            <label for="Visibility">Visibility (10m):</label>
+            <input type="number" id="Visibility" name="Visibility" required>
+
+
+            <label for="dew_point_temperature">Dew Point Temperature (°C):</label>
+            <input type="number" step="0.1" id="dew_point_temperature" name="dew_point_temperature" required>
+
+
+            <label for="Solar_Radiation">Solar Radiation (MJ/m2):</label>
+            <input type="number" step="0.01" id="Solar_Radiation" name="Solar_Radiation" required>
+
+
+            <label for="Rainfall">Rainfall (mm):</label>
+            <input type="number" step="0.1" id="Rainfall" name="Rainfall" required>
+
+
+            <label for="snowfall">Snowfall (cm):</label>
+            <input type="number" step="0.1" id="snowfall" name="snowfall" required>
+
+
+            <label for="month">Month (1-12):</label>
+            <input type="number" id="month" name="month" min="1" max="12" required>
+
+
+            <label for="day">Day (1-31):</label>
+            <input type="number" id="day" name="day" min="1" max="31" required>
+
+
+            <hr>
+            <h3>Categorical Features (0 for No, 1 for Yes)</h3>
+
+
+            <label for="Seasons_Autumn">Season: Autumn:</label>
+            <input type="number" id="Seasons_Autumn" name="Seasons_Autumn" min="0" max="1" required>
+
+
+            <label for="Seasons_Spring">Season: Spring:</label>
+            <input type="number" id="Seasons_Spring" name="Seasons_Spring" min="0" max="1" required>
+
+
+            <label for="Seasons_Summer">Season: Summer:</label>
+            <input type="number" id="Seasons_Summer" name="Seasons_Summer" min="0" max="1" required>
+
+
+            <label for="Seasons_Winter">Season: Winter:</label>
+            <input type="number" id="Seasons_Winter" name="Seasons_Winter" min="0" max="1" required>
+
+
+            <label for="Holiday_Holiday">Is Holiday:</label>
+            <input type="number" id="Holiday_Holiday" name="Holiday_Holiday" min="0" max="1" required>
+
+
+            <label for="Holiday_No_Holiday">Is Not Holiday:</label>
+            <input type="number" id="Holiday_No_Holiday" name="Holiday_No_Holiday" min="0" max="1" required>
+
+
+            <label for="Functioning_Day_No">Functioning Day: No:</label>
+            <input type="number" id="Functioning_Day_No" name="Functioning_Day_No" min="0" max="1" required>
+
+
+            <label for="Functioning_Day_Yes">Functioning Day: Yes:</label>
+            <input type="number" id="Functioning_Day_Yes" name="Functioning_Day_Yes" min="0" max="1" required>
+
+
+            <button type="submit">Predict</button>
+        </form>
+
+
+        <form method="get" action="/train">
+            <button type="submit" class="train-button">Train Model</button>
+        </form>
+
+
+        {% if context %}
+            <div class="result">
+                <h2>Result: {{ context }}</h2>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+
+
+

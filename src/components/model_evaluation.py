@@ -2,9 +2,9 @@ from src.entity.config_entity import ModelEvaluationConfig
 from src.entity.artifact_entity import ModelTrainerArtifact, DataIngestionArtifact, ModelEvaluationArtifact
 from sklearn.metrics import r2_score
 from src.exception import MyException
-from src.constants import TARGET_COLUMN
+from src.constants import TARGET_COLUMN,SCHEMA_FILE_PATH
 from src.logger import logging
-from src.utils.main_utils import load_object
+from src.utils.main_utils import load_object, read_yaml_file
 import sys
 import pandas as pd
 from typing import Optional
@@ -31,6 +31,7 @@ class ModelEvaluation:
             self.model_eval_config = model_eval_config
             self.data_ingestion_artifact = data_ingestion_artifact
             self.model_trainer_artifact = model_trainer_artifact
+            self.schema_config=read_yaml_file(file_path=SCHEMA_FILE_PATH)
         except Exception as e:
             raise MyException(e, sys) from e
 
@@ -56,38 +57,6 @@ class ModelEvaluation:
         except Exception as e:
             raise  MyException(e,sys)
        
-    # def _map_gender_column(self, df):
-    #     """Map Gender column to 0 for Female and 1 for Male."""
-    #     logging.info("Mapping 'Gender' column to binary values")
-    #     df['Gender'] = df['Gender'].map({'Female': 0, 'Male': 1}).astype(int)
-    #     return df
-
-
-    # def _create_dummy_columns(self, df):
-    #     """Create dummy variables for categorical features."""
-    #     logging.info("Creating dummy variables for categorical features")
-    #     df = pd.get_dummies(df, drop_first=True)
-    #     return df
-
-
-    # def _rename_columns(self, df):
-    #     """Rename specific columns and ensure integer types for dummy columns."""
-    #     logging.info("Renaming specific columns and casting to int")
-    #     df = df.rename(columns={
-    #         "Vehicle_Age_< 1 Year": "Vehicle_Age_lt_1_Year",
-    #         "Vehicle_Age_> 2 Years": "Vehicle_Age_gt_2_Years"
-    #     })
-    #     for col in ["Vehicle_Age_lt_1_Year", "Vehicle_Age_gt_2_Years", "Vehicle_Damage_Yes"]:
-    #         if col in df.columns:
-    #             df[col] = df[col].astype('int')
-    #     return df
-   
-    # def _drop_id_column(self, df):
-    #     """Drop the 'id' column if it exists."""
-    #     logging.info("Dropping 'id' column")
-    #     if "_id" in df.columns:
-    #         df = df.drop("_id", axis=1)
-    #     return df
 
 
     def handle_date(self,df):
