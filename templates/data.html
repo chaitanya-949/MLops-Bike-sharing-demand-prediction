@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bike Rental Prediction</title>
-    <link rel="stylesheet" href="/Users/chaitanya/OneDrive/Desktop/proj-2/MLops-Bike-sharing-demand-prediction/static/css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
 </head>
 <body>
     <div class="container">
@@ -60,35 +60,19 @@
             <h3>Categorical Features (0 for No, 1 for Yes)</h3>
 
 
-            <label for="Seasons_Autumn">Season: Autumn:</label>
-            <input type="number" id="Seasons_Autumn" name="Seasons_Autumn" min="0" max="1" required>
-
-
-            <label for="Seasons_Spring">Season: Spring:</label>
+            <label for="Seasons_Spring">Season: Spring (1 if Spring):</label>
             <input type="number" id="Seasons_Spring" name="Seasons_Spring" min="0" max="1" required>
 
-
-            <label for="Seasons_Summer">Season: Summer:</label>
+            <label for="Seasons_Summer">Season: Summer (1 if Summer):</label>
             <input type="number" id="Seasons_Summer" name="Seasons_Summer" min="0" max="1" required>
 
-
-            <label for="Seasons_Winter">Season: Winter:</label>
+            <label for="Seasons_Winter">Season: Winter (1 if Winter):</label>
             <input type="number" id="Seasons_Winter" name="Seasons_Winter" min="0" max="1" required>
 
-
-            <label for="Holiday_Holiday">Is Holiday:</label>
-            <input type="number" id="Holiday_Holiday" name="Holiday_Holiday" min="0" max="1" required>
-
-
-            <label for="Holiday_No_Holiday">Is Not Holiday:</label>
+            <label for="Holiday_No_Holiday">No Holiday (1 if No Holiday):</label>
             <input type="number" id="Holiday_No_Holiday" name="Holiday_No_Holiday" min="0" max="1" required>
 
-
-            <label for="Functioning_Day_No">Functioning Day: No:</label>
-            <input type="number" id="Functioning_Day_No" name="Functioning_Day_No" min="0" max="1" required>
-
-
-            <label for="Functioning_Day_Yes">Functioning Day: Yes:</label>
+            <label for="Functioning_Day_Yes">Functioning Day (1 if Yes):</label>
             <input type="number" id="Functioning_Day_Yes" name="Functioning_Day_Yes" min="0" max="1" required>
 
 

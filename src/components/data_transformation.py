@@ -69,7 +69,7 @@ class dataTransformation:
     def _create_dummy_columns(self, df):
         """Create dummy variables for categorical features."""
         logging.info("Creating dummy variables for categorical features")
-        df = pd.get_dummies(data=df,drop_first=True).astype(int)
+        df = pd.get_dummies(data=df, drop_first=True).astype(int)
         return df
            
            

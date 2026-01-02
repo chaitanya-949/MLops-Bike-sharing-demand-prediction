@@ -6,6 +6,8 @@ from fastapi.templating import Jinja2Templates
 from starlette.responses import HTMLResponse, RedirectResponse
 from uvicorn import run as app_run
 from typing import Optional
+from pathlib import Path
+import os
 
 # Importing constants and pipeline modules from the project (update these if your classes have different names)
 from src.constants import APP_HOST, APP_PORT
@@ -15,11 +17,16 @@ from src.pipeline.training_pipeline import TrainPipeline
 # Initialize FastAPI application
 app = FastAPI()
 
+# Determine project base dir and mount static/templates with absolute paths
+BASE_DIR = Path(__file__).resolve().parent
+STATIC_DIR = os.path.join(BASE_DIR, "static")
+TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
+
 # Mount the 'static' directory for serving static files (like CSS)
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 # Set up Jinja2 template engine for rendering HTML templates
-templates = Jinja2Templates(directory='templates')
+templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 # Allow all origins for Cross-Origin Resource Sharing (CORS)
 origins = ["*"]
@@ -55,9 +62,7 @@ class DataForm:
         self.Seasons_Spring: Optional[int] = None
         self.Seasons_Summer: Optional[int] = None
         self.Seasons_Winter: Optional[int] = None
-        self.Holiday_Holiday: Optional[int] = None
         self.Holiday_No_Holiday: Optional[int] = None
-        self.Functioning_Day_No: Optional[int] = None
         self.Functioning_Day_Yes: Optional[int] = None
                
     async def get_bike_data(self):
@@ -96,9 +101,7 @@ class DataForm:
         self.Seasons_Spring = to_int(form.get("Seasons_Spring"))
         self.Seasons_Summer = to_int(form.get("Seasons_Summer"))
         self.Seasons_Winter = to_int(form.get("Seasons_Winter"))
-        self.Holiday_Holiday = to_int(form.get("Holiday_Holiday"))
         self.Holiday_No_Holiday = to_int(form.get("Holiday_No_Holiday"))
-        self.Functioning_Day_No = to_int(form.get("Functioning_Day_No"))
         self.Functioning_Day_Yes = to_int(form.get("Functioning_Day_Yes"))
 
 # Route to render the main page with the form
@@ -149,9 +152,7 @@ async def predictRouteClient(request: Request):
             Seasons_Spring=form.Seasons_Spring,
             Seasons_Summer=form.Seasons_Summer,
             Seasons_Winter=form.Seasons_Winter,
-            Holiday_Holiday=form.Holiday_Holiday,
             Holiday_No_Holiday=form.Holiday_No_Holiday,
-            Functioning_Day_No=form.Functioning_Day_No,
             Functioning_Day_Yes=form.Functioning_Day_Yes
         )
         

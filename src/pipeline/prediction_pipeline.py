@@ -21,13 +21,10 @@ class VehicleData:
                 snowfall,
                 month,
                 day,
-                Seasons_Autumn,
                 Seasons_Spring,
                 Seasons_Summer,
                 Seasons_Winter,
-                Holiday_Holiday,
                 Holiday_No_Holiday,
-                Functioning_Day_No,
                 Functioning_Day_Yes
                 # Age,
 
@@ -49,13 +46,10 @@ class VehicleData:
             self.snowfall = snowfall
             self.month = month
             self.day = day
-            self.Seasons_Autumn=Seasons_Autumn
             self.Seasons_Spring=Seasons_Spring
             self.Seasons_Summer=Seasons_Summer
             self.Seasons_Winter=Seasons_Winter
-            self.Holiday_Holiday=Holiday_Holiday
             self.Holiday_No_Holiday=Holiday_No_Holiday
-            self.Functioning_Day_No=Functioning_Day_No
             self.Functioning_Day_Yes=Functioning_Day_Yes
            
 
@@ -87,6 +81,7 @@ class VehicleData:
 
 
         try:
+            # Build input dict in the same order as transformed training features (excluding target)
             input_data = {
                 "Hour": [self.Hour],
                 "Temperature": [self.Temperature],
@@ -99,24 +94,11 @@ class VehicleData:
                 "snowfall": [self.snowfall],
                 "month": [self.month],
                 "day": [self.day],
-                "Seasons_Autumn": [self.Seasons_Autumn],
                 "Seasons_Spring": [self.Seasons_Spring],
                 "Seasons_Summer": [self.Seasons_Summer],
                 "Seasons_Winter": [self.Seasons_Winter],
-                "Holiday_Holiday": [self.Holiday_Holiday],
                 "Holiday_No_Holiday": [self.Holiday_No_Holiday],
-                "Functioning_Day_No": [self.Functioning_Day_No],
                 "Functioning_Day_Yes": [self.Functioning_Day_Yes]
-                # "Temperature": [self.Temperature],
-                # "Driving_License": [self.Driving_License],
-                # "Region_Code": [self.Region_Code],
-                # "Previously_Insured": [self.Previously_Insured],
-                # "Annual_Premium": [self.Annual_Premium],
-                # "Policy_Sales_Channel": [self.Policy_Sales_Channel],
-                # "Vintage": [self.Vintage],
-                # "Vehicle_Age_lt_1_Year": [self.Vehicle_Age_lt_1_Year],
-                # "Vehicle_Age_gt_2_Years": [self.Vehicle_Age_gt_2_Years],
-                # "Vehicle_Damage_Yes": [self.Vehicle_Damage_Yes]
             }
 
 
