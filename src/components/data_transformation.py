@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import sys
+import os
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.compose import ColumnTransformer
@@ -12,6 +13,8 @@ from src.entity.artifact_entity import DataTransformationArtifact, DataIngestion
 from src.exception import MyException
 from src.logger import logging
 from src.utils.main_utils import save_object, save_numpy_array_data, read_yaml_file
+from src.utils.main_utils import write_yaml_file
+import json
 
 
 
@@ -196,9 +199,27 @@ class dataTransformation:
             # logging.info("Preprocessing pipeline applied")
 
 
-            # Save transformed arrays
-            save_numpy_array_data(self.data_transformation_config.transformed_train_file_path, input_feature_train_df)
-            save_numpy_array_data(self.data_transformation_config.transformed_test_file_path, input_feature_test_df)
+            # Save transformed arrays. The training pipeline expects arrays where the
+            # last column is the target (so downstream trainer can split train[:, :-1], train[:, -1]).
+            # Create numpy arrays with features + target as last column.
+            train_combined = None
+            test_combined = None
+
+            try:
+                train_combined = pd.concat([input_feature_train_df.reset_index(drop=True), target_feature_train_df.reset_index(drop=True)], axis=1).to_numpy()
+                test_combined = pd.concat([input_feature_test_df.reset_index(drop=True), target_feature_test_df.reset_index(drop=True)], axis=1).to_numpy()
+            except Exception:
+                # fallback: if target series not available, save features only
+                train_combined = input_feature_train_df.to_numpy()
+                test_combined = input_feature_test_df.to_numpy()
+
+            save_numpy_array_data(self.data_transformation_config.transformed_train_file_path, train_combined)
+            save_numpy_array_data(self.data_transformation_config.transformed_test_file_path, test_combined)
+
+            # Save the transformed feature names (including target as last entry) to a YAML file
+            feature_names = list(input_feature_train_df.columns) + [TARGET_COLUMN]
+            feature_names_path = os.path.join(self.data_transformation_config.data_transformation_dir, 'transformed', 'feature_names.yaml')
+            write_yaml_file(feature_names_path, feature_names, replace=True)
            
             # #Save preprocessor object
             # save_object(self.data_transformation_config.transformed_object_file_path, preprocessor)

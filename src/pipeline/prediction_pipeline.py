@@ -4,6 +4,10 @@ from src.entity.s3_estimator import Proj1Estimator
 from src.exception import MyException
 from src.logger import logging
 from pandas import DataFrame
+import os
+import glob
+from src.utils.main_utils import read_yaml_file
+from src.constants import TARGET_COLUMN
 
 
 
@@ -133,8 +137,41 @@ class VehicleDataClassifier:
                 bucket_name=self.prediction_pipeline_config.model_bucket_name,
                 model_path=self.prediction_pipeline_config.model_file_path,
             )
-            result =  model.predict(dataframe)
-           
+
+            # Attempt to find transformed feature names from the latest artifact so
+            # we can reorder/select the incoming DataFrame columns to match training.
+            try:
+                artifact_dirs = glob.glob(os.path.join("artifact", "*"))
+                artifact_dirs = [d for d in artifact_dirs if os.path.isdir(d)]
+                artifact_dirs.sort(key=lambda x: os.path.getmtime(x), reverse=True)
+                feature_names = None
+                for d in artifact_dirs:
+                    candidate = os.path.join(d, "data_transformation", "transformed", "feature_names.yaml")
+                    if os.path.exists(candidate):
+                        feature_names = read_yaml_file(candidate)
+                        break
+
+                if feature_names:
+                    # feature_names saved include the TARGET_COLUMN as last entry; remove it
+                    if feature_names and feature_names[-1] == TARGET_COLUMN:
+                        expected_features = feature_names[:-1]
+                    else:
+                        expected_features = feature_names
+
+                    # Build ordered DataFrame matching expected_features, pad missing with zeros
+                    import pandas as _pd
+                    ordered = _pd.DataFrame()
+                    for feat in expected_features:
+                        if feat in dataframe.columns:
+                            ordered[feat] = dataframe[feat]
+                        else:
+                            ordered[feat] = 0
+                    dataframe = ordered
+                    logging.info(f"Reordered/padded input to match {len(expected_features)} training features")
+            except Exception:
+                logging.warning("Could not find or load feature_names.yaml — falling back to given dataframe")
+
+            result = model.predict(dataframe)
             return result
        
         except Exception as e:
