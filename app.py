@@ -164,9 +164,15 @@ async def predictRouteClient(request: Request):
         
         # Make a prediction and retrieve the result
         value = model_predictor.predict(dataframe=bike_df)[0]
-        
+
+        # Round the prediction to the nearest integer (rental counts are whole numbers)
+        try:
+            rounded_value = int(round(float(value)))
+        except Exception:
+            rounded_value = value
+
         # Interpret the prediction result (adjust based on your model's output, e.g., predicted rented bike count)
-        status = f"Predicted Rented Bike Count: {value}"  # <-- Customize this display
+        status = f"Predicted Rented Bike Count: {rounded_value}"  # <-- Customize this display
         
         # Render the same HTML page with the prediction result
         return templates.TemplateResponse(

@@ -72,7 +72,7 @@ class dataTransformation:
     def _create_dummy_columns(self, df):
         """Create dummy variables for categorical features."""
         logging.info("Creating dummy variables for categorical features")
-        df = pd.get_dummies(data=df, drop_first=True).astype(int)
+        df = pd.get_dummies(data=df).astype(int)
         return df
            
            
@@ -94,62 +94,6 @@ class dataTransformation:
        
         return df
    
-
-
-
-
-    def get_data_transformer_object(self) -> Pipeline:
-        """
-        Creates and returns a data transformer object for the data,
-        including gender mapping, dummy variable creation, column renaming,
-        feature scaling, and type adjustments.
-        """
-        logging.info("Entered get_data_transformer_object method of DataTransformation class")
-
-
-        try:
-            # Initialize transformers
-            numeric_transformer = StandardScaler()
-            #min_max_scaler = MinMaxScaler()
-            logging.info("Transformers Initialized: StandardScaler-MinMaxScaler")
-
-
-            # Load schema configurations
-            num_features = self.schema_config['num_features']
-            #mm_columns = self._schema_config['mm_columns']
-            logging.info("Cols loaded from schema.")
-
-
-            # Creating preprocessor pipeline
-            preprocessor = ColumnTransformer(
-                transformers=[
-                    ("StandardScaler", numeric_transformer, num_features)
-                   # ("MinMaxScaler", min_max_scaler, mm_columns)
-                ],
-                remainder='passthrough'  # Leaves other columns as they are
-            )
-
-
-            # Wrapping everything in a single pipeline
-            final_pipeline = Pipeline(steps=[("Preprocessor", preprocessor)])
-            logging.info("Final Pipeline Ready!!")
-            logging.info("Exited get_data_transformer_object method of DataTransformation class")
-            return final_pipeline
-
-
-        except Exception as e:
-            logging.exception("Exception occurred in get_data_transformer_object method of DataTransformation class")
-            raise MyException(e, sys) from e
-
-
-
-
-
-
-
-
-
-
 
 
     def initiate_data_transformation(self) -> DataTransformationArtifact:

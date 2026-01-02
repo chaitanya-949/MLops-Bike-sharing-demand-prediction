@@ -7,3 +7,4 @@ __pycache__
 *.pyc
 src.egg-info
 .pytest_cache
+scripts
