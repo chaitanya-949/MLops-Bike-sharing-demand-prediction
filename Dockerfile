@@ -1,23 +1,18 @@
-# Use Python 3.10 slim image
-FROM python:3.10-slim
+# Use an official Python 3.10 image from Docker Hub
+FROM python:3.10-slim-buster
 
-# Set working directory
+# Set the working directory
 WORKDIR /app
 
-
-# Copy the rest of the app
+# Copy your application code
 COPY . /app
 
-
-
-# Install dependencies
+# Install the dependencies
 RUN pip install -r requirements.txt
 
-# Copy the rest of the app
-COPY . /app
-
-# Expose port
+# Expose the port FastAPI will run on
 EXPOSE 5000
 
-# Run FastAPI with Uvicorn
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "5000"]
+# Command to run the FastAPI app
+CMD ["python3", "app.py"]
+# CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8080"]

@@ -5,28 +5,22 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.responses import HTMLResponse, RedirectResponse
 from uvicorn import run as app_run
+
 from typing import Optional
-from pathlib import Path
-import os
-from fastapi.staticfiles import StaticFiles
 
-
-# Importing constants and pipeline modules from the project (update these if your classes have different names)
+# Importing constants and pipeline modules from the project
 from src.constants import APP_HOST, APP_PORT
-from src.pipeline.prediction_pipeline import VehicleData, VehicleDataClassifier  # <-- Renamed to match your context (e.g., bike rental demand)
+from src.pipeline.prediction_pipeline import VehicleData, VehicleDataClassifier
 from src.pipeline.training_pipeline import TrainPipeline
 
-BASE_DIR = Path(__file__).resolve().parent
-STATIC_DIR = BASE_DIR / "static"
-TEMPLATES_DIR = BASE_DIR / "templates"
-
+# Initialize FastAPI application
 app = FastAPI()
 
-# Mount static folder
-app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+# Mount the 'static' directory for serving static files (like CSS)
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# Jinja2 templates
-templates = Jinja2Templates(directory=TEMPLATES_DIR)
+# Set up Jinja2 template engine for rendering HTML templates
+templates = Jinja2Templates(directory='templates')
 
 # Allow all origins for Cross-Origin Resource Sharing (CORS)
 origins = ["*"]
@@ -167,7 +161,7 @@ async def predictRouteClient(request: Request):
 
         # Round the prediction to the nearest integer (rental counts are whole numbers)
         try:
-            rounded_value = int(round(float(value)))
+            rounded_value = int(round(value))
         except Exception:
             rounded_value = value
 
