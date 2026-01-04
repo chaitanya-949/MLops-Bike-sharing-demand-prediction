@@ -16,22 +16,16 @@ from src.constants import APP_HOST, APP_PORT
 from src.pipeline.prediction_pipeline import VehicleData, VehicleDataClassifier  # <-- Renamed to match your context (e.g., bike rental demand)
 from src.pipeline.training_pipeline import TrainPipeline
 
-# Initialize FastAPI application
-app = FastAPI()
-app.mount(
-    "/static",
-    StaticFiles(directory="static"),
-    name="static"
-)
-# Determine project base dir and mount static/templates with absolute paths
 BASE_DIR = Path(__file__).resolve().parent
-STATIC_DIR = os.path.join(BASE_DIR, "static")
-TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
+STATIC_DIR = BASE_DIR / "static"
+TEMPLATES_DIR = BASE_DIR / "templates"
 
-# Mount the 'static' directory for serving static files (like CSS)
+app = FastAPI()
+
+# Mount static folder
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
-# Set up Jinja2 template engine for rendering HTML templates
+# Jinja2 templates
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 # Allow all origins for Cross-Origin Resource Sharing (CORS)
