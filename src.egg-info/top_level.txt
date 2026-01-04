@@ -1,2 +1,5 @@
 config
+scripts
 src
+static
+templates

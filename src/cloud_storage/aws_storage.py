@@ -9,6 +9,7 @@ from src.exception import MyException
 from botocore.exceptions import ClientError
 from pandas import DataFrame,read_csv
 import pickle
+from boto3.s3.transfer import TransferConfig
 
 
 class SimpleStorageService:
@@ -165,8 +166,22 @@ class SimpleStorageService:
         logging.info("Entered the upload_file method of SimpleStorageService class")
         try:
             logging.info(f"Uploading {from_filename} to {to_filename} in {bucket_name}")
-            self.s3_resource.meta.client.upload_file(from_filename, bucket_name, to_filename)
-            logging.info(f"Uploaded {from_filename} to {to_filename} in {bucket_name}")
+            # Use TransferConfig to enable multipart uploads with concurrency
+            try:
+                file_size = os.path.getsize(from_filename)
+            except Exception:
+                file_size = None
+
+            config = TransferConfig(
+                multipart_threshold=5 * 1024 * 1024,
+                multipart_chunksize=8 * 1024 * 1024,
+                max_concurrency=10,
+                use_threads=True,
+            )
+
+            # Pass TransferConfig to upload_file to improve throughput on larger files
+            self.s3_resource.meta.client.upload_file(from_filename, bucket_name, to_filename, Config=config)
+            logging.info(f"Uploaded {from_filename} to {to_filename} in {bucket_name} (size={file_size})")
 
             # Delete the local file if remove is True
             if remove:

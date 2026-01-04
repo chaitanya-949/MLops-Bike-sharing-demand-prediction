@@ -1,6 +1,8 @@
 LICENSE
 pyproject.toml
 setup.py
+scripts/inspect_model.py
+scripts/run_local_test.py
 src/__init__.py
 src.egg-info/PKG-INFO
 src.egg-info/SOURCES.txt
@@ -28,8 +30,8 @@ src/entity/estimator.py
 src/entity/s3_estimator.py
 src/exception/__init__.py
 src/logger/__init__.py
-src/pipline/__init__.py
-src/pipline/prediction_pipeline.py
-src/pipline/training_pipeline.py
+src/pipeline/__init__.py
+src/pipeline/prediction_pipeline.py
+src/pipeline/training_pipeline.py
 src/utils/__init__.py
 src/utils/main_utils.py
