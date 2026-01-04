@@ -8,6 +8,8 @@ from uvicorn import run as app_run
 from typing import Optional
 from pathlib import Path
 import os
+from fastapi.staticfiles import StaticFiles
+
 
 # Importing constants and pipeline modules from the project (update these if your classes have different names)
 from src.constants import APP_HOST, APP_PORT
@@ -16,7 +18,11 @@ from src.pipeline.training_pipeline import TrainPipeline
 
 # Initialize FastAPI application
 app = FastAPI()
-
+app.mount(
+    "/static",
+    StaticFiles(directory="static"),
+    name="static"
+)
 # Determine project base dir and mount static/templates with absolute paths
 BASE_DIR = Path(__file__).resolve().parent
 STATIC_DIR = os.path.join(BASE_DIR, "static")
