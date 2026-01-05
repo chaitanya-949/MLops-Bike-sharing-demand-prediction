@@ -9,7 +9,6 @@ body {
     background-color: #f4f6f8;
 }
 
-
 .container {
     width: 100%;
     max-width: 500px;
@@ -20,11 +19,9 @@ body {
     text-align: center;
 }
 
-
 h1 {
     color: #333;
 }
-
 
 form {
     display: flex;
@@ -32,20 +29,17 @@ form {
     gap: 15px;
 }
 
-
 label {
     text-align: left;
     color: #555;
     font-weight: bold;
 }
 
-
 input {
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
 }
-
 
 button {
     padding: 10px;
@@ -57,31 +51,23 @@ button {
     font-size: 16px;
 }
 
-
 button:hover {
     background-color: #0056b3;
 }
-
 
 .train-button {
     background-color: #28a745;
     margin-top: 15px;
 }
 
-
 .train-button:hover {
     background-color: #218838;
 }
-
 
 .result {
     margin-top: 20px;
 }
 
-
 .result h2 {
     color: #007bff;
 }
-
-
-
