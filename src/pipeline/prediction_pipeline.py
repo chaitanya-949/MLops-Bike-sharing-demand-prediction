@@ -25,6 +25,7 @@ class VehicleData:
                 snowfall,
                 month,
                 day,
+               # Seasons_Autumn,
                 Seasons_Spring,
                 Seasons_Summer,
                 Seasons_Winter,
@@ -50,6 +51,7 @@ class VehicleData:
             self.snowfall = snowfall
             self.month = month
             self.day = day
+            #self.Seasons_Autumn = Seasons_Autumn
             self.Seasons_Spring=Seasons_Spring
             self.Seasons_Summer=Seasons_Summer
             self.Seasons_Winter=Seasons_Winter
@@ -98,6 +100,7 @@ class VehicleData:
                 "snowfall": [self.snowfall],
                 "month": [self.month],
                 "day": [self.day],
+                # "Seasons_Autumn": [getattr(self, 'Seasons_Autumn', 0)],
                 "Seasons_Spring": [self.Seasons_Spring],
                 "Seasons_Summer": [self.Seasons_Summer],
                 "Seasons_Winter": [self.Seasons_Winter],

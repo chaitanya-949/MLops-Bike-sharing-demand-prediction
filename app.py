@@ -52,7 +52,7 @@ class DataForm:
         self.snowfall: Optional[float] = None
         self.month: Optional[int] = None
         self.day: Optional[int] = None
-        self.Seasons_Autumn: Optional[int] = None
+        #self.Seasons_Autumn: Optional[int] = None
         self.Seasons_Spring: Optional[int] = None
         self.Seasons_Summer: Optional[int] = None
         self.Seasons_Winter: Optional[int] = None
@@ -91,7 +91,7 @@ class DataForm:
         self.day = to_int(form.get("day"))
 
         # categorical/binary flags (0 or 1)
-        self.Seasons_Autumn = to_int(form.get("Seasons_Autumn"))
+        #self.Seasons_Autumn = to_int(form.get("Seasons_Autumn"))
         self.Seasons_Spring = to_int(form.get("Seasons_Spring"))
         self.Seasons_Summer = to_int(form.get("Seasons_Summer"))
         self.Seasons_Winter = to_int(form.get("Seasons_Winter"))
@@ -142,7 +142,7 @@ async def predictRouteClient(request: Request):
             snowfall=form.snowfall,
             month=form.month,
             day=form.day,
-            Seasons_Autumn=form.Seasons_Autumn,
+            #Seasons_Autumn=form.Seasons_Autumn,
             Seasons_Spring=form.Seasons_Spring,
             Seasons_Summer=form.Seasons_Summer,
             Seasons_Winter=form.Seasons_Winter,
