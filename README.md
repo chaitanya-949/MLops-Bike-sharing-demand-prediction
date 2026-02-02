@@ -30,7 +30,6 @@ The system is designed with **scalability, reproducibility, and automation** in 
 * **Language**: Python
 * **ML Model**: XGBoost Regressor
 * **Pipeline Design**: Modular OOP-based pipeline
-* **Experiment Tracking & Versioning**: DVC
 * **Artifact Storage**: AWS S3
 * **Containerization**: Docker
 * **CI/CD**: GitHub Actions (Self-hosted runner)
